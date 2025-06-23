@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>GPU Web Test</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
     <h1>Teste GPU - Upload de Imagem</h1>
@@ -10,8 +11,20 @@
         <button type="submit">Enviar</button>
     </form>
     {% if result_image %}
+    <div class="result">
         <h2>Imagem processada:</h2>
-        <img src="{{ result_image }}" width="512">
+        <div class="container">
+            <div>
+                <h3>Original</h3>
+                <img src="{{ original_image }}" width="256">
+            </div>
+            <div>
+                <h3>Resultado</h3>
+                <img src="{{ result_image }}" width="256">
+            </div>
+        </div>
+        <p><a href="/{{ result_image }}" download>Baixar imagem</a></p>
+    </div>
     {% endif %}
 </body>
 </html>
