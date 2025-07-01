@@ -2,16 +2,44 @@
 <html>
 <head>
     <title>GPU Web Test</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
     <h1>Teste GPU - Upload de Imagem</h1>
-    <form method="POST" enctype="multipart/form-data">
-        <input type="file" name="image" required>
+    <form id="generate-form" method="POST" enctype="multipart/form-data" class="form">
+        <input id="file-input" type="file" name="image" accept="image/*" required>
+        <input type="text" name="prompt" placeholder="Prompt" required>
+        <select name="mode">
+            <option value="image">Gerar Imagem</option>
+            <option value="video">Gerar Vídeo</option>
+        </select>
         <button type="submit">Enviar</button>
     </form>
-    {% if result_image %}
-        <h2>Imagem processada:</h2>
-        <img src="{{ result_image }}" width="512">
+    <div id="preview"></div>
+    <div id="progress" class="progress"><div class="bar"></div></div>
+    {% if result_image or result_video %}
+    <div class="result">
+        <h2>Resultado:</h2>
+        <div class="container">
+            <div>
+                <h3>Original</h3>
+                <img src="{{ original_image }}" width="256">
+            </div>
+            <div>
+                {% if result_image %}
+                <h3>Imagem</h3>
+                <img src="{{ result_image }}" width="256">
+                <p><a href="/{{ result_image }}" download>Baixar imagem</a></p>
+                {% endif %}
+                {% if result_video %}
+                <h3>Vídeo</h3>
+                <video src="/{{ result_video }}" width="256" controls loop autoplay></video>
+                <p><a href="/{{ result_video }}" download>Baixar vídeo</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
     {% endif %}
+    <script src="/static/script.js"></script>
 </body>
 </html>
